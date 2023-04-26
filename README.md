@@ -23,7 +23,9 @@ To get started, clone the repository and install the necessary node modules.
 
 ### Environment Variables
 
-Enter your OpenAI API key. See `env.example` for instructions.
+Make a copy of the `.env.example` file, rename it as `.env`. Enter your OpenAI API key.
+
+Specific instructions 5 & 6 [here](https://github.com/openai/openai-quickstart-node).
 
 ### Development, Build, Deploy
 
