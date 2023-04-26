@@ -5,6 +5,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
+/* For testing */
 // export default async function (req, res) {
 //   setTimeout(() => {
 //     res.status(200).json({ code: `console.log("hello world ${req.body.prompt}")`});
@@ -39,9 +40,6 @@ export default async function (req, res) {
       messages:[
           {
             "role": "user", 
-            // "content": `Do not explain. Convert the following text into p5js code that runs in the draw function: ${userInput}`
-            // "content": `Do not explain. Convert the following text into react-p5 code that runs in the draw function: ${userInput}`
-            // "content": `Do not explain, answer only in code. You are converting user text input into react-p5 code that will be run in eval() within a React component. You only need to provide the react-p5 'setup' and 'draw' functions, as well as other helper functions that will be used in them. Your response must start with 'const setup = (p5, canvasParentRef)'. This is the user text input: ${userInput}`
             "content": `Do not explain, answer only in code. You are converting user text input into p5.js code. Your response must start with 'function setup() {' or 'const' or 'let'. Your response must include 'function setup()' and 'function draw()'. This is the user text input: ${prompt}`
           }
         ]
@@ -64,16 +62,3 @@ export default async function (req, res) {
     }
   }
 }
-
-// function generatePrompt(prompt) {
-//   const capitalizedprompt =
-//     prompt[0].toUpperCase() + prompt.slice(1).toLowerCase();
-//   return `Suggest three names for an prompt that is a superhero.
-
-// prompt: Cat
-// Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline
-// prompt: Dog
-// Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
-// prompt: ${capitalizedprompt}
-// Names:`;
-// }

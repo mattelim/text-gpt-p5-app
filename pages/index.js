@@ -1,7 +1,5 @@
 import Head from "next/head";
 import { useState, useCallback, useRef, useEffect } from "react";
-// import styles from "./index.module.css";
-// import { sandboxedEval } from "./sandboxedEval";
 import { TextInput } from "./components/TextInput";
 import { Editor } from "./components/Editor";
 import { RunContainer } from "./components/RunContainer";
@@ -222,6 +220,69 @@ const egArray = [
         ellipse(this.pos.x, this.pos.y, this.r, this.r / 2);
       }
     }`
+  },
+  {
+    value: "Click gravity balls",
+    prompt: "every click creates a bouncing ball that eventually rests on the floor",
+    code: `function setup() {
+      createCanvas(400,400);
+      rectMode(CENTER);
+    }
+    
+    let balls = [];
+    
+    function draw() {
+      background(200);
+      for(let ball of balls) {
+        ball.show();
+        ball.move();
+        ball.bounce();
+        ball.stop();
+      }
+    }
+    
+    function mousePressed() {
+      balls.push(new Ball(mouseX,mouseY,random(10,30)));
+    }
+    
+    class Ball {
+      constructor(x,y,r) {
+        this.pos = createVector(x,y);
+        this.vel = createVector(random(-3,3),random(-8,-3));
+        this.acc = createVector(0,0.1);
+        this.r = r;
+        this.rest = false;
+      }
+      
+      show() {
+        strokeWeight(2);
+        stroke(0);
+        fill(255,0,0);
+        ellipse(this.pos.x,this.pos.y,this.r*2,this.r*2);
+      }
+      
+      move() {
+        if(!this.rest) {
+          this.vel.add(this.acc);
+          this.pos.add(this.vel);
+        }
+      }
+      
+      bounce() {
+        if(this.pos.y+this.r > height) {
+          this.vel.y *= -0.8;
+          this.pos.y = height-this.r;
+        }
+      }
+      
+      stop() {
+        if(this.vel.y < 0.1 && this.pos.y+this.r >= height) {
+          this.rest = true;
+          this.vel = createVector(0,0);
+          this.acc = createVector(0,0);
+        }
+      }
+    }`
   }
 ];
 
@@ -253,8 +314,6 @@ export default function Home() {
     return () => window.removeEventListener("message", handler)
   }, [result, sandboxRunning])
 
-  
-  // let result;
   function textInputChange(event) {
     event.preventDefault();
     setTextInput(event.target.value);
@@ -286,56 +345,26 @@ export default function Home() {
       setSandboxRunning(true);
       console.log("Generated p5 code: " + data.code)
       setWaiting(false);
-      // setResult("WHYYY");
-      // result = data.result;
-      // setTextInput("");
     } catch(error) {
-      // Consider implementing your own error handling logic here
       console.error(error);
       alert(error.message);
       setWaiting(false);
     }
-    // console.log("Text: " + textInput);
   }
 
   const editorChange = useCallback((value, viewUpdate) => {
-    // console.log('value:', value);
-    // result = value;
     setResult(value);
-    // console.log('result:', result);
   }, []);
   
   function runClickPlay(event) {
-    // console.log("Hi dad")
     event.preventDefault();
     setSandboxRunning(true);
-    // try {
-    //   // // const result = await sandboxedEval(JSON.stringify(src));
-    //   // // const runLog = await sandboxedEval(result, setEvalResult, sandboxDom);
-    //   // const runLog = await sandboxedEval(result, setEvalResult);
-    //   // // evalResult.value = JSON.stringify(result);
-    //   // console.log(runLog);
-    //   setSandboxRunning(true);
-    // } catch (e) {
-    //   // evalResult.value = e;
-    // }
   }
 
   function runClickStop(event) {
-    // console.log("Hi dad")
     event.preventDefault();
     setSandboxRunning(false);
     setlogMsg("");
-    // try {
-    //   // // const result = await sandboxedEval(JSON.stringify(src));
-    //   // // const runLog = await sandboxedEval(result, setEvalResult, sandboxDom);
-    //   // const runLog = await sandboxedEval(result, setEvalResult);
-    //   // // evalResult.value = JSON.stringify(result);
-    //   // console.log(runLog);
-    //   setSandboxRunning(false);
-    // } catch (e) {
-    //   // evalResult.value = e;
-    // }
   }
 
   function textSelectChange(event) {
@@ -353,7 +382,6 @@ export default function Home() {
       setResult('');
       setSandboxRunning(false);
     }
-    // setTextInput(event.target.value);
   }
 
   return (

@@ -1,10 +1,6 @@
 import { SandBox } from "./SandBox";
 
 export function RunContainer({sandboxRunning, clickPlay, clickStop, result, logMsg, waiting}) {
-    // const [evalResult, setEvalResult] = useState("");
-    // const sandboxDom = document.getElementById("sandbox");
-    // console.log(sandboxRunning);
-
     return (
       <div className="rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3 flex flex-col gap-2">
         <div className="flex justify-between">
@@ -62,7 +58,6 @@ export function RunContainer({sandboxRunning, clickPlay, clickStop, result, logM
             </div>
         </div>
 
-        {/* <div id="sandbox">The canvas will go here</div> */}
         <SandBox running={sandboxRunning} result={result}/>
 
         <textarea className="block w-full bg-gray-100 rounded font-mono p-2 text-sm min-h-[70px] text-gray-500"

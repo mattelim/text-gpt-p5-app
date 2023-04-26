@@ -1,5 +1,4 @@
 export function TextInput({textInput, onChange, onSubmit, waiting, selectVal, selectChange, egArray}) {
-    // const [textInput, setTextInput] = useState("");
     return (
       <div className="rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3">
         <div className="flex justify-between">
