@@ -1,4 +1,4 @@
-export function TextInput({textInput, onChange, onSubmit, waiting, selectVal, selectChange, egArray}) {
+export default function TextInput({textInput, onChange, onSubmit, waiting, selectVal, selectChange, egArray}) {
     return (
       <div className="rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3">
         <div className="flex justify-between">
@@ -11,7 +11,7 @@ export function TextInput({textInput, onChange, onSubmit, waiting, selectVal, se
             onChange={selectChange}
             >
               <option value="">Choose an example</option>
-              {egArray.map((eg, index) => {
+              {egArray?.map((eg, index) => {
                   return <option value={eg.value} key={index}>{eg.value}</option>
                 }
               )}

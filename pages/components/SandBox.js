@@ -1,4 +1,4 @@
-export function SandBox({running, result}) {
+export default function SandBox({running, result}) {
     const srcdoc = (src) =>
     `<!doctype html>
     <html>

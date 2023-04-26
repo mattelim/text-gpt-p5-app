@@ -1,6 +1,6 @@
-import { SandBox } from "./SandBox";
+import SandBox from "./SandBox";
 
-export function RunContainer({sandboxRunning, clickPlay, clickStop, result, logMsg, waiting}) {
+export default function RunContainer({sandboxRunning, clickPlay, clickStop, result, logMsg, waiting}) {
     return (
       <div className="rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3 flex flex-col gap-2">
         <div className="flex justify-between">
