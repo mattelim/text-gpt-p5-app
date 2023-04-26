@@ -11,6 +11,9 @@ It is also a sandbox environment for running p5.js (or any javascript code). You
 ### Under the hood
 
 A Next.js full-stack app (React, Next API routes).
+
+Node module(s):
+- react-codemirror
   
 ### Getting Started
 
@@ -30,5 +33,7 @@ Both dev and production are on port 3000.
 
 ## Acknowledgments 🙏
 
+- [uiwjs/react-codemirror](https://github.com/uiwjs/react-codemirror)
+- [codemirror/codemirror5](https://github.com/codemirror/codemirror5)
 - [syumai/sandboxed-eval](https://github.com/syumai/sandboxed-eval)
 - [openai/openai-quickstart-node](https://github.com/openai/openai-quickstart-node)
