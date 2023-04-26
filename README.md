@@ -1,28 +1,16 @@
 # Text→GPT→p5
 
-A text to p5.js Generative Editor powered by GPT-3.5
+A text to p5.js generative editor powered by GPT-3.5 ✨
 1. takes plain text prompts 📝
 2. makes an OpenAI GPT-3.5 call 🤖
 2. converts them into p5.js code 🌸
 3. displays the p5.js sketch 🖼️
 
-A Next.js app that
+It is also a sandbox environment for running p5.js (or any javascript code). You can make direct edits to the generated code, which re-runs the sketch immediately, similar to Glitch or Replit. 
 
-**Front-end**
-- Vite
-- Typescript
-- Multipage (template includes 3 entry points)
+### Under the hood
 
-**Back-end**
-- ts-node 
-- Typescript
-- Express
-- DX libraries
-  - Nodemon
-  - Livereload
-- Included (easily removed)
-  - Socket.io
-  - Sqlite3
+A Next.js full-stack app (React, Next API routes).
   
 ### Getting Started
 
@@ -30,40 +18,17 @@ To get started, clone the repository and install the necessary node modules.
 
 `npm install`
 
-### Development 
+### Environment Variables
 
-During development, open two terminal tabs, on one, run:
+Enter your OpenAI API key. See `env.example` for instructions.
 
-`npm run build -- --watch`
+### Development, Build, Deploy
 
-On the other, run:
+Next.js defaults. See `package.json` for commands.
+Both dev and production are on port 3000.
 
-`npm run dev`
 
-The first compiles the `.ts` and imported ES node modules into the dist folder. (This is a somewhat unconventional use of Vite – the other way is to use a bundler, but this is a shortcut for me to save time.)
+## Acknowledgments 🙏
 
-The second runs the `server.ts` file in `nodemon` on port `3000` and watches for any changes to the files. To add more convenience, `livereload` is added so that the `html` pages automatically refreshes in the browser.
-
-#### Testing if the template works
-
-After running the two development steps, you should be able to open these addresses:
-- [http://localhost:3000/](http://localhost:3000/)
-- [http://localhost:3000/1](http://localhost:3000/1)
-- [http://localhost:3000/2](http://localhost:3000/2)
-- [http://localhost:3000/api/test](http://localhost:3000/api/test)
-
-### Production
-
-To go into production, run:
-
-`npm run build`, then run:
-
-`npm run start`
-
-This starts a production ts-node server on port `3000`.
-
-## Acknowledgments
-
-This template is built using ideas and code from [cyco130/vavite](https://github.com/cyco130/vavite) and [szymmis/vite-express](https://github.com/szymmis/vite-express). 
-  
-  
+- [syumai/sandboxed-eval](https://github.com/syumai/sandboxed-eval)
+- [openai/openai-quickstart-node](https://github.com/openai/openai-quickstart-node)
