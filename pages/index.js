@@ -291,6 +291,147 @@ export default function Home() {
           }
         }
       }`
+    },
+    {
+      value: "Ball bounce changes color",
+      prompt: "draw a circle that bounces between the left and right, changing colors every bounce",
+      code: `let x = 50;
+      let y = 200;
+      let xspeed = 5;
+      let diameter = 50;
+      let r = 255;
+      let g = 0;
+      let b = 0;
+      let dir = 1;
+      
+      function setup() {
+        createCanvas(400, 400);
+      }
+      
+      function draw() {
+        background(220);
+      
+        fill(r, g, b);
+        ellipse(x, y, diameter);
+      
+        x += xspeed * dir;
+      
+        if (x + diameter/2 > width || x - diameter/2 < 0) {
+          dir *= -1;
+          r = random(255);
+          g = random(255);
+          b = random(255);
+        }
+      }`
+    },
+    {
+      value: "3D forms panning",
+      prompt: "Panning around a 3d scene with spheres, cubes, pyramids",
+      code: `const spheres = [];
+      const cubes = [];
+      const pyramids = [];
+      
+      function setup() {
+        createCanvas(400, 400, WEBGL);
+        for (let i = 0; i < 5; i++) {
+          spheres.push(new Sphere(random(-100, 100), random(-100, 100), random(-100, 100)));
+          cubes.push(new Cube(random(-100, 100), random(-100, 100), random(-100, 100)));
+          pyramids.push(new Pyramid(random(-100, 100), random(-100, 100), random(-100, 100)));
+        }
+      }
+      
+      function draw() {
+        background(200);
+        noStroke();
+        lights();
+        rotateX(frameCount * 0.01);
+        rotateY(frameCount * 0.01);
+        for (let i = 0; i < 5; i++) {
+          spheres[i].show();
+          cubes[i].show();
+          pyramids[i].show();
+        }
+      }
+      
+      class Sphere {
+        constructor(x, y, z) {
+          this.x = x;
+          this.y = y;
+          this.z = z;
+        }
+        show() {
+          push();
+          translate(this.x, this.y, this.z);
+          sphere(20);
+          pop();
+        }
+      }
+      
+      class Cube {
+        constructor(x, y, z) {
+          this.x = x;
+          this.y = y;
+          this.z = z;
+        }
+        show() {
+          push();
+          translate(this.x, this.y, this.z);
+          box(40);
+          pop();
+        }
+      }
+      
+      class Pyramid {
+        constructor(x, y, z) {
+          this.x = x;
+          this.y = y;
+          this.z = z;
+        }
+        show() {
+          push();
+          translate(this.x, this.y, this.z);
+          beginShape();
+          vertex(0, -20, 0);
+          vertex(10, 10, -10);
+          vertex(-10, 10, -10);
+          endShape(CLOSE);
+          pop();
+        }
+      }`
+    },
+    {
+      value: "color noise static",
+      prompt: "CRT TV static",
+      code: `const numRects = 500;
+      const rectWidth = 2;
+      const rectHeight = 2;
+      let rects = [];
+      
+      function setup() {
+        createCanvas(windowWidth, windowHeight);
+        for (let i = 0; i < numRects; i++) {
+          rects.push({
+            x: random(width),
+            y: random(height),
+            r: random(255),
+            g: random(255),
+            b: random(255)
+          });
+        }
+        background(0);
+      }
+      
+      function draw() {
+        for (let i = 0; i < numRects; i++) {
+          noStroke();
+          fill(rects[i].r, rects[i].g, rects[i].b);
+          rect(rects[i].x, rects[i].y, rectWidth, rectHeight);
+          if (random(100) < 1) {
+            rects[i].x = random(width);
+            rects[i].y = random(height);
+          }
+        }
+      }`
     }
   ];
 
@@ -325,7 +466,7 @@ export default function Home() {
     setResult("// Please be patient, this may take a while...");
     setSelVal("");
     try {
-      const response = await fetch("/api/generate", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_REMOTE_API_URL || ''}/api/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
