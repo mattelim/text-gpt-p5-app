@@ -1,4 +1,4 @@
-# Text-GPT-p5.js
+# Text→GPT→p5
 
 A text to p5.js Generative Editor powered by GPT-3.5
 1. takes plain text prompts 📝
