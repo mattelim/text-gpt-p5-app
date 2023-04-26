@@ -22,7 +22,7 @@ export default function TextInput({textInput, onChange, onSubmit, waiting, selec
           disabled:border-gray-300 disabled:text-gray-600 disabled:bg-gray-100"
             type="text"
             name="prompt"
-            placeholder="Enter a text prompt for a p5.js sketch (e.g. Conway's Game of Life)"
+            placeholder="Enter a text prompt for a p5.js sketch. Click the dropdown for examples."
             value={textInput}
             onChange={onChange}
             disabled={waiting}
