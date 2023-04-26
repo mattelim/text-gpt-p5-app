@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    #__next {
+        @apply w-full flex justify-center;
+    }
+}

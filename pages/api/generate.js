@@ -5,6 +5,12 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
+// export default async function (req, res) {
+//   setTimeout(() => {
+//     res.status(200).json({ code: `console.log("hello world ${req.body.prompt}")`});
+//   }, 4000);
+// }
+
 export default async function (req, res) {
   if (!configuration.apiKey) {
     res.status(500).json({
@@ -15,23 +21,34 @@ export default async function (req, res) {
     return;
   }
 
-  const animal = req.body.animal || '';
-  if (animal.trim().length === 0) {
+  const prompt = req.body.prompt || '';
+  if (prompt.trim().length === 0) {
     res.status(400).json({
       error: {
-        message: "Please enter a valid animal",
+        message: "Please enter a valid prompt",
       }
     });
     return;
   }
 
+  console.log('User prompt:', prompt);
+
   try {
-    const completion = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: generatePrompt(animal),
-      temperature: 0.6,
+    const completion = await openai.createChatCompletion({
+      model:"gpt-3.5-turbo",
+      messages:[
+          {
+            "role": "user", 
+            // "content": `Do not explain. Convert the following text into p5js code that runs in the draw function: ${userInput}`
+            // "content": `Do not explain. Convert the following text into react-p5 code that runs in the draw function: ${userInput}`
+            // "content": `Do not explain, answer only in code. You are converting user text input into react-p5 code that will be run in eval() within a React component. You only need to provide the react-p5 'setup' and 'draw' functions, as well as other helper functions that will be used in them. Your response must start with 'const setup = (p5, canvasParentRef)'. This is the user text input: ${userInput}`
+            "content": `Do not explain, answer only in code. You are converting user text input into p5.js code. Your response must start with 'function setup() {' or 'const' or 'let'. Your response must include 'function setup()' and 'function draw()'. This is the user text input: ${prompt}`
+          }
+        ]
     });
-    res.status(200).json({ result: completion.data.choices[0].text });
+  console.log(completion.data);
+  console.log("Sent: " + completion.data.choices[0].message.content);
+  res.status(200).json({ code: completion.data.choices[0].message.content});
   } catch(error) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
@@ -48,15 +65,15 @@ export default async function (req, res) {
   }
 }
 
-function generatePrompt(animal) {
-  const capitalizedAnimal =
-    animal[0].toUpperCase() + animal.slice(1).toLowerCase();
-  return `Suggest three names for an animal that is a superhero.
+// function generatePrompt(prompt) {
+//   const capitalizedprompt =
+//     prompt[0].toUpperCase() + prompt.slice(1).toLowerCase();
+//   return `Suggest three names for an prompt that is a superhero.
 
-Animal: Cat
-Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline
-Animal: Dog
-Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
-Animal: ${capitalizedAnimal}
-Names:`;
-}
+// prompt: Cat
+// Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline
+// prompt: Dog
+// Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
+// prompt: ${capitalizedprompt}
+// Names:`;
+// }

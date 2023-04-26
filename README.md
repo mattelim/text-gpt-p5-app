@@ -1,2 +1,2 @@
 # gpt-p5-app
- OpenAI GPT-powered p5.js Generative Editor
+ OpenAI GPT-3.5 to p5.js Generative Editor
