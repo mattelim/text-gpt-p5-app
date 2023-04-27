@@ -37,6 +37,7 @@ Both dev and production are on port 3000.
 
 ## Acknowledgments 🙏
 
+- [processing/p5.js](https://github.com/processing/p5.js)
 - [uiwjs/react-codemirror](https://github.com/uiwjs/react-codemirror)
 - [codemirror/codemirror5](https://github.com/codemirror/codemirror5)
 - [syumai/sandboxed-eval](https://github.com/syumai/sandboxed-eval)
