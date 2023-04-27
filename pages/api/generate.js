@@ -3,8 +3,10 @@ import Cors from 'cors';
 
 // Initializing the cors middleware
 // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+const whitelist = process.env.WHITELISTED_DOMAINS.split(',');
+
 const cors = Cors({
-  origin: ["http://localhost:3000", "https://text-gpt-p5.vercel.app", "https://text-gpt-p5.mattl.im"]
+  origin: whitelist || ''
 })
 
 const configuration = new Configuration({
