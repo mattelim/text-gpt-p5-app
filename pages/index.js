@@ -170,161 +170,6 @@ export default function Home() {
       }`
     },
     {
-      value: "Lines on click or touch",
-      prompt: "A line in a random direction starts from where the user presses",
-      code: `function setup() {
-        createCanvas(400, 400);
-      }
-      
-      function draw() {
-        strokeWeight(2);
-        if (mouseIsPressed) {
-          let angle = random(0, 360);
-          let dx = cos(angle);
-          let dy = sin(angle);
-          line(mouseX, mouseY, mouseX + dx * 50, mouseY + dy * 50);
-        }
-      }`
-    },
-    {
-      value: "Zen ripples",
-      prompt: "perlin noise moving ripples, super zen",
-      code: `const ripples = [];
-  
-      function setup() {
-        createCanvas(windowWidth, windowHeight);
-        stroke(255);
-        noFill();
-        for (let i = 0; i < 10; i++) {
-          ripples.push(new Ripple(random(width), random(height)));
-        }
-      }
-      
-      function draw() {
-        background(0);
-        for (let i = 0; i < ripples.length; i++) {
-          ripples[i].update();
-          ripples[i].display();
-        }
-      }
-      
-      class Ripple {
-        constructor(x, y) {
-          this.pos = createVector(x, y);
-          this.r = 50;
-          this.maxR = 500;
-        }
-      
-        update() {
-          this.r += noise(frameCount / 100, this.pos.y / 100) * 5;
-          if (this.r > this.maxR) {
-            this.r = 0;
-            this.pos.x = random(width);
-            this.pos.y = random(height);
-          }
-        }
-      
-        display() {
-          ellipse(this.pos.x, this.pos.y, this.r, this.r / 2);
-        }
-      }`
-    },
-    {
-      value: "Click gravity balls",
-      prompt: "every click creates a bouncing ball that eventually rests on the floor",
-      code: `function setup() {
-        createCanvas(400,400);
-        rectMode(CENTER);
-      }
-      
-      let balls = [];
-      
-      function draw() {
-        background(200);
-        for(let ball of balls) {
-          ball.show();
-          ball.move();
-          ball.bounce();
-          ball.stop();
-        }
-      }
-      
-      function mousePressed() {
-        balls.push(new Ball(mouseX,mouseY,random(10,30)));
-      }
-      
-      class Ball {
-        constructor(x,y,r) {
-          this.pos = createVector(x,y);
-          this.vel = createVector(random(-3,3),random(-8,-3));
-          this.acc = createVector(0,0.1);
-          this.r = r;
-          this.rest = false;
-        }
-        
-        show() {
-          strokeWeight(2);
-          stroke(0);
-          fill(255,0,0);
-          ellipse(this.pos.x,this.pos.y,this.r*2,this.r*2);
-        }
-        
-        move() {
-          if(!this.rest) {
-            this.vel.add(this.acc);
-            this.pos.add(this.vel);
-          }
-        }
-        
-        bounce() {
-          if(this.pos.y+this.r > height) {
-            this.vel.y *= -0.8;
-            this.pos.y = height-this.r;
-          }
-        }
-        
-        stop() {
-          if(this.vel.y < 0.1 && this.pos.y+this.r >= height) {
-            this.rest = true;
-            this.vel = createVector(0,0);
-            this.acc = createVector(0,0);
-          }
-        }
-      }`
-    },
-    {
-      value: "Ball bounce changes color",
-      prompt: "draw a circle that bounces between the left and right, changing colors every bounce",
-      code: `let x = 50;
-      let y = 200;
-      let xspeed = 5;
-      let diameter = 50;
-      let r = 255;
-      let g = 0;
-      let b = 0;
-      let dir = 1;
-      
-      function setup() {
-        createCanvas(400, 400);
-      }
-      
-      function draw() {
-        background(220);
-      
-        fill(r, g, b);
-        ellipse(x, y, diameter);
-      
-        x += xspeed * dir;
-      
-        if (x + diameter/2 > width || x - diameter/2 < 0) {
-          dir *= -1;
-          r = random(255);
-          g = random(255);
-          b = random(255);
-        }
-      }`
-    },
-    {
       value: "3D forms panning",
       prompt: "Panning around a 3d scene with spheres, cubes, pyramids",
       code: `const spheres = [];
@@ -400,7 +245,137 @@ export default function Home() {
       }`
     },
     {
-      value: "color noise static",
+      value: "Radial lines on click",
+      prompt: "A line in a random direction starts from where the user presses",
+      code: `function setup() {
+        createCanvas(400, 400);
+      }
+      
+      function draw() {
+        strokeWeight(2);
+        if (mouseIsPressed) {
+          let angle = random(0, 360);
+          let dx = cos(angle);
+          let dy = sin(angle);
+          line(mouseX, mouseY, mouseX + dx * 50, mouseY + dy * 50);
+        }
+      }`
+    },
+    {
+      value: "Gravity balls on click",
+      prompt: "every click creates a bouncing ball that eventually rests on the floor",
+      code: `function setup() {
+        createCanvas(400,400);
+        rectMode(CENTER);
+      }
+      
+      let balls = [];
+      
+      function draw() {
+        background(200);
+        for(let ball of balls) {
+          ball.show();
+          ball.move();
+          ball.bounce();
+          ball.stop();
+        }
+      }
+      
+      function mousePressed() {
+        balls.push(new Ball(mouseX,mouseY,random(10,30)));
+      }
+      
+      class Ball {
+        constructor(x,y,r) {
+          this.pos = createVector(x,y);
+          this.vel = createVector(random(-3,3),random(-8,-3));
+          this.acc = createVector(0,0.1);
+          this.r = r;
+          this.rest = false;
+        }
+        
+        show() {
+          strokeWeight(2);
+          stroke(0);
+          fill(255,0,0);
+          ellipse(this.pos.x,this.pos.y,this.r*2,this.r*2);
+        }
+        
+        move() {
+          if(!this.rest) {
+            this.vel.add(this.acc);
+            this.pos.add(this.vel);
+          }
+        }
+        
+        bounce() {
+          if(this.pos.y+this.r > height) {
+            this.vel.y *= -0.8;
+            this.pos.y = height-this.r;
+          }
+        }
+        
+        stop() {
+          if(this.vel.y < 0.1 && this.pos.y+this.r >= height) {
+            this.rest = true;
+            this.vel = createVector(0,0);
+            this.acc = createVector(0,0);
+          }
+        }
+      }`
+    },
+    {
+      value: "Bouncing balls on click",
+      prompt: "bouncing balls everywhere",
+      code: `let balls = [];
+
+      function setup() {
+        createCanvas(windowWidth, windowHeight);
+      }
+      
+      function draw() {
+        background(220);
+      
+        for (let i = 0; i < balls.length; i++) {
+          balls[i].update();
+          balls[i].show();
+        }
+      }
+      
+      class Ball {
+        constructor(x, y, speedX, speedY, size) {
+          this.x = x;
+          this.y = y;
+          this.speedX = speedX;
+          this.speedY = speedY;
+          this.size = size;
+        }
+      
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+      
+          if (this.x < 0 || this.x > width) {
+            this.speedX *= -1;
+          }
+          if (this.y < 0 || this.y > height) {
+            this.speedY *= -1;
+          }
+        }
+      
+        show() {
+          noStroke();
+          fill(random(255), random(255), random(255));
+          ellipse(this.x, this.y, this.size);
+        }
+      }
+      
+      function mousePressed() {
+        balls.push(new Ball(mouseX, mouseY, random(-10, 10), random(-10, 10), random(20, 50)));
+      }`
+    },
+    {
+      value: "Color noise static",
       prompt: "CRT TV static",
       code: `const numRects = 500;
       const rectWidth = 2;
@@ -432,7 +407,50 @@ export default function Home() {
           }
         }
       }`
-    }
+    },
+    {
+      value: "Zen ripples",
+      prompt: "perlin noise moving ripples, super zen",
+      code: `const ripples = [];
+  
+      function setup() {
+        createCanvas(windowWidth, windowHeight);
+        stroke(255);
+        noFill();
+        for (let i = 0; i < 10; i++) {
+          ripples.push(new Ripple(random(width), random(height)));
+        }
+      }
+      
+      function draw() {
+        background(0);
+        for (let i = 0; i < ripples.length; i++) {
+          ripples[i].update();
+          ripples[i].display();
+        }
+      }
+      
+      class Ripple {
+        constructor(x, y) {
+          this.pos = createVector(x, y);
+          this.r = 50;
+          this.maxR = 500;
+        }
+      
+        update() {
+          this.r += noise(frameCount / 100, this.pos.y / 100) * 5;
+          if (this.r > this.maxR) {
+            this.r = 0;
+            this.pos.x = random(width);
+            this.pos.y = random(height);
+          }
+        }
+      
+        display() {
+          ellipse(this.pos.x, this.pos.y, this.r, this.r / 2);
+        }
+      }`
+    },
   ];
 
   useEffect(() => {
