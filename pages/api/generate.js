@@ -3,10 +3,10 @@ import Cors from 'cors';
 
 // Initializing the cors middleware
 // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
-const whitelist = process.env.WHITELISTED_DOMAINS.split(',');
+const whitelist = process.env.WHITELISTED_DOMAINS ? process.env.WHITELISTED_DOMAINS.split(',') : '*' ;
 
 const cors = Cors({
-  origin: whitelist || ''
+  origin: whitelist
 })
 
 const configuration = new Configuration({
