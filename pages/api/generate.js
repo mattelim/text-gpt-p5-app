@@ -1,9 +1,29 @@
 import { Configuration, OpenAIApi } from "openai";
+import Cors from 'cors';
+
+// Initializing the cors middleware
+// You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+const cors = Cors({
+  origin: ["http://localhost:3000", "https://text-gpt-p5.vercel.app", "https://text-gpt-p5.mattl.im"]
+})
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
+
+// Helper method to wait for a middleware to execute before continuing
+// And to throw an error when an error happens in a middleware
+function runMiddleware(req, res, fn) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result)
+      }
+      return resolve(result)
+    })
+  })
+}
 
 /* For testing */
 // export default async function (req, res) {
@@ -13,6 +33,8 @@ const openai = new OpenAIApi(configuration);
 // }
 
 export default async function (req, res) {
+  await runMiddleware(req, res, cors);
+
   if (!configuration.apiKey) {
     res.status(500).json({
       error: {
