@@ -1,3 +1,5 @@
+'use client';
+
 import Head from "next/head";
 import { useState, useCallback, useEffect } from "react";
 import TextInput from "./components/TextInput";
@@ -11,6 +13,60 @@ export default function Home() {
   const [sandboxRunning, setSandboxRunning] = useState(false);
   const [logMsg, setlogMsg] = useState("");
   const [selVal, setSelVal] = useState("");
+  const [freeGen, setFreeGen] = useState(null);
+  const [charCount, setCharCount] = useState(0);
+
+  const MAX_FREE_ARTICLES = 5;
+
+  useEffect(() => {
+      // Retrieve the last access date and reset the free article count if necessary
+      const lastAccessDate = localStorage.getItem('lastAccessDate');
+      const today = new Date().toLocaleDateString();
+      if (lastAccessDate !== today) {
+        localStorage.setItem('lastAccessDate', today);
+        localStorage.setItem('freeGen', '5');
+        setFreeGen(5);
+      } else {
+        // Retrieve the free article count from local storage
+        const count = parseInt(localStorage.getItem('freeGen'));
+        if (!isNaN(count)) {
+          setFreeGen(count);
+        }
+      }
+  }, []);
+
+  function handleGenClick() {
+    // if (freeGen >= MAX_FREE_ARTICLES) {
+    //   // Redirect the user to the login page or subscription page
+    //   window.location.href = '/login';
+    // } else {
+      // Increment the free article count and save it to local storage
+      localStorage.setItem('freeGen', `${freeGen - 1}`);
+      setFreeGen(freeGen - 1);
+      // Show the article content
+    // }
+  }
+
+  // useEffect(() => {
+  //   const freeGen = JSON.parse(localStorage.getItem('freeGen'));
+  //   setFreeGen(freeGen || 5);
+  // }, []);
+
+  // if (typeof window !== 'undefined') {
+  //   console.log('we are running on the client')
+  //   const saved = localStorage.getItem("name");
+  //   const initialValue = JSON.parse(saved);
+  //   setFreeGen(initialValue || 0);
+  //   // return initialValue || "";
+  // } else {
+  //   console.log('we are running on the server');
+  // }
+  // const [freeGen, setFreeGen] = useState(() => {
+  //   // getting stored value
+  //   const saved = localStorage.getItem("name");
+  //   const initialValue = JSON.parse(saved);
+  //   return initialValue || "";
+  // });
 
   const egArray = [
     {
@@ -475,6 +531,7 @@ export default function Home() {
   function textInputChange(event) {
     event.preventDefault();
     setTextInput(event.target.value);
+    setCharCount(event.target.value.length);
   }
 
   async function textInputSubmit(event) {
@@ -500,6 +557,7 @@ export default function Home() {
       setResult(data.code);
       setSandboxRunning(true);
       setWaiting(false);
+      handleGenClick();
     } catch(error) {
       console.error(error);
       alert(error.message);
@@ -538,10 +596,60 @@ export default function Home() {
     }
   }
 
+// const maxFreeGens = 5;
+
+// // Check if the user is logged in
+// if (userLoggedIn) {
+//   // Allow unlimited access to articles
+// } else {
+//   // Retrieve the last access date and reset the free article count if necessary
+//   const lastAccessDate = localStorage.getItem('lastAccessDate');
+//   const today = new Date().toLocaleDateString();
+//   if (lastAccessDate !== today) {
+//     localStorage.setItem('lastAccessDate', today);
+//     localStorage.setItem('freeGenCount', 0);
+//   }
+//   // Check if the user has exceeded the maximum number of free articles
+//   const freeGenCount = localStorage.getItem('freeGenCount');
+//   if (freeGenCount && parseInt(freeGenCount) >= maxFreeGens) {
+//     // Redirect the user to the login page or subscription page
+//     window.location.href = '/login';
+//   } else {
+//     // Increment the free article count and save it to local storage
+//     localStorage.setItem('freeGenCount', freeGenCount ? parseInt(freeGenCount) + 1 : 1);
+//     // Allow access to the article
+//   }
+// }
+
+// const maxFreeGens = 5;
+
+// // Check if the user is logged in
+// if (userLoggedIn) {
+//   // Allow unlimited access to articles
+// } else {
+//   // Retrieve the last access date and reset the free article count if necessary
+//   const lastAccessDate = localStorage.getItem('lastAccessDate');
+//   const today = new Date().toLocaleDateString();
+//   if (lastAccessDate !== today) {
+//     localStorage.setItem('lastAccessDate', today);
+//     localStorage.setItem('freeGenCount', 0);
+//   }
+//   // Check if the user has exceeded the maximum number of free articles
+//   const freeGenCount = localStorage.getItem('freeGenCount');
+//   if (freeGenCount && parseInt(freeGenCount) >= maxFreeGens) {
+//     // Redirect the user to the login page or subscription page
+//     window.location.href = '/login';
+//   } else {
+//     // Increment the free article count and save it to local storage
+//     localStorage.setItem('freeGenCount', freeGenCount ? parseInt(freeGenCount) + 1 : 1);
+//     // Allow access to the article
+//   }
+// }
+
   return (
     <>
       <Head>
-        <title>Text → GPT → p5</title>
+        <title>Text-GPT-p5</title>
         <meta name="description" content="Turn text into p5.js code using GPT and display it" />
         <link rel="icon" href="/gpt-p5.svg" />
       </Head>
@@ -551,7 +659,7 @@ export default function Home() {
             <img src="gpt-p5-emerald.png" alt="logo" className="h-11 w-11 p-2 bg-white rounded-full shadow shadow-emerald-600/30 overflow-visible"/>
           <div className="text-gray-700">
             <h1 className="font-semibold text-xl ">
-              Text → GPT → p5
+              Text-GPT-p5
             </h1>
             <p>A text to p5.js generative editor powered by GPT-3.5 ✨</p>
           </div>
@@ -561,7 +669,7 @@ export default function Home() {
             <a href="https://www.buymeacoffee.com/mattelim" target="_blank"><img src="bmc-logo.svg" alt="buy me a coffee" className="w-8 aspect-square opacity-30 hover:opacity-100 xs:w-6"/></a>
           </div>
         </header>
-        <TextInput key="textinput-01" textInput={textInput} onChange={textInputChange} onSubmit={textInputSubmit} waiting={waiting} selectVal={selVal} selectChange={textSelectChange} egArray={egArray}/>
+        <TextInput key="textinput-01" textInput={textInput} onChange={textInputChange} onSubmit={textInputSubmit} waiting={waiting} selectVal={selVal} selectChange={textSelectChange} egArray={egArray} freeGen={freeGen} charCount={charCount}/>
         <Editor key="editor-01" result={result} onChange={editorChange} waiting={waiting}/>
         <RunContainer key="runcont-01" sandboxRunning={sandboxRunning} clickPlay={runClickPlay} clickStop={runClickStop} result={result} logMsg={logMsg} waiting={waiting}/>
         <p className="text-gray-400 text-sm text-center mt-3">Made by <a href="https://mattelim.com" target="_blank" className="underline">Matte Lim</a></p>
