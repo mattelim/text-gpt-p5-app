@@ -31,7 +31,7 @@ function runMiddleware(req, res, fn) {
 // export default async function (req, res) {
 //   setTimeout(() => {
 //     res.status(200).json({ code: `console.log("hello world ${req.body.prompt}")`});
-//   }, 4000);
+//   }, 1000);
 // }
 
 export default async function (req, res) {
