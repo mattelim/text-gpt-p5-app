@@ -649,8 +649,12 @@ export default function Home() {
   return (
     <>
       <Head>
+<<<<<<< HEAD
         <title>Text-GPT-p5</title>
         <meta name="description" content="Turn text into p5.js code using GPT and display it" />
+=======
+        <title>Text → GPT → p5</title>
+>>>>>>> parent of 4b1296e (Add meta description)
         <link rel="icon" href="/gpt-p5.svg" />
       </Head>
       <div className="w-full p-5 flex flex-col gap-5 max-w-2xl min-w-[320px]">
