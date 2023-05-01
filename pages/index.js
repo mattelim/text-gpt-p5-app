@@ -547,7 +547,7 @@ export default function Home() {
         <meta name="description" content="Turn text into p5.js code using GPT and display it" />
         <link rel="icon" href="/gpt-p5.svg" />
       </Head>
-      <div className="w-full p-5 flex flex-col gap-5 max-w-2xl min-w-[320px]">
+      <div className="w-full p-5 flex flex-col gap-5 max-w-2xl min-w-[320px] relative 2xl:max-w-7xl">
         <header className="flex gap-3 justify-between">
           <div className="flex gap-3">
             <img src="gpt-p5-emerald.png" alt="logo" className="h-11 w-11 p-2 bg-white rounded-full shadow shadow-emerald-600/30 overflow-visible"/>
@@ -563,9 +563,15 @@ export default function Home() {
             <a href="https://www.buymeacoffee.com/mattelim" target="_blank"><img src="bmc-logo.svg" alt="buy me a coffee" className="w-8 aspect-square opacity-30 hover:opacity-100 xs:w-6"/></a>
           </div>
         </header>
-        <TextInput key="textinput-01" textInput={textInput} onChange={textInputChange} onSubmit={textInputSubmit} waiting={waiting} selectVal={selVal} selectChange={textSelectChange} egArray={egArray}/>
-        <Editor key="editor-01" result={result} onChange={editorChange} waiting={waiting}/>
-        <RunContainer key="runcont-01" sandboxRunning={sandboxRunning} clickPlay={runClickPlay} clickStop={runClickStop} result={result} logMsg={logMsg} waiting={waiting}/>
+        <div className="flex flex-col gap-4 2xl:flex-row w-full">
+          <div className="flex flex-col gap-4 2xl:w-1/2">
+            <TextInput key="textinput-01" textInput={textInput} onChange={textInputChange} onSubmit={textInputSubmit} waiting={waiting} selectVal={selVal} selectChange={textSelectChange} egArray={egArray}/>
+            <Editor key="editor-01" result={result} onChange={editorChange} waiting={waiting}/>
+          </div>
+          <div className="flex flex-col gap-4 2xl:w-1/2">
+            <RunContainer key="runcont-01" sandboxRunning={sandboxRunning} clickPlay={runClickPlay} clickStop={runClickStop} result={result} logMsg={logMsg} waiting={waiting}/>
+          </div>
+        </div>
         <p className="text-gray-400 text-sm text-center mt-3">Made by <a href="https://mattelim.com" target="_blank" className="underline">Matte Lim</a></p>
       </div>
     </>
