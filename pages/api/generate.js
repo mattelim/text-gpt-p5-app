@@ -1,4 +1,4 @@
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 import Cors from 'cors';
 
 // Initializing the cors middleware
@@ -9,10 +9,10 @@ const cors = Cors({
   origin: whitelist
 })
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+const apiKey = process.env.OPENAI_API_KEY;
+const openai = new OpenAI({
+  apiKey: apiKey,
 });
-const openai = new OpenAIApi(configuration);
 
 // Helper method to wait for a middleware to execute before continuing
 // And to throw an error when an error happens in a middleware
@@ -37,7 +37,7 @@ function runMiddleware(req, res, fn) {
 export default async function (req, res) {
   await runMiddleware(req, res, cors);
 
-  if (!configuration.apiKey) {
+  if (!apiKey) {
     res.status(500).json({
       error: {
         message: "OpenAI API key not configured, please follow instructions in README.md",
@@ -59,8 +59,9 @@ export default async function (req, res) {
   console.log('User prompt:', prompt);
 
   try {
-    const completion = await openai.createChatCompletion({
-      model:"gpt-3.5-turbo",
+    const completion = await openai.chat.completions.create({
+      // model:"gpt-3.5-turbo",
+      model:"gpt-3.5-turbo-1106",   // force update to latest 1106 model
       messages:[
           {
             "role": "user", 
@@ -68,9 +69,9 @@ export default async function (req, res) {
           }
         ]
     });
-  console.log(completion.data);
-  console.log("Sent: " + completion.data.choices[0].message.content);
-  res.status(200).json({ code: completion.data.choices[0].message.content});
+  console.log(completion); 
+  console.log("Sent: " + completion.choices[0].message.content);
+  res.status(200).json({ code: completion.choices[0].message.content});
   } catch(error) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
