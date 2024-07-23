@@ -60,16 +60,43 @@ export default async function (req, res) {
 
   try {
     const completion = await openai.chat.completions.create({
-      // model:"gpt-3.5-turbo",
-      model:"gpt-3.5-turbo-1106",   // force update to latest 1106 model
-      messages:[
-          {
-            "role": "user", 
-            "content": `Do not explain, answer only in code. You are converting user text input into p5.js code. Your response must start with 'function setup() {' or 'const' or 'let'. Your response must include 'function setup()' and 'function draw()'. This is the user text input: ${prompt}`
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          "role": "system",
+          "content": "You are an expert p5.js coder. You are convert user text input into p5.js code."
+        },
+        {
+          "role": "user",
+          "content": 
+          `Answer only in code, you can add explanations as comments within the code. 
+          
+          Your response must be in the following p5.js format:
+          \`\`\`
+          // <initialize variables>
+
+          function setup() {
+            // <setup code>
           }
-        ]
+          
+          // <other code>
+
+          function draw() {
+            // <draw code>
+          } 
+
+          // <other code>
+          \`\`\`
+
+          
+          User text input:
+          """
+          ${prompt}
+          """`
+        }
+      ]
     });
-  console.log(completion); 
+    console.log(completion); 
   console.log("Sent: " + completion.choices[0].message.content);
   res.status(200).json({ code: completion.choices[0].message.content});
   } catch(error) {
