@@ -555,7 +555,7 @@ export default function Home() {
             <h1 className="font-semibold text-xl ">
               Text-GPT-p5
             </h1>
-            <p>A text to p5.js generative editor powered by GPT-3.5 ✨</p>
+            <p>A text to p5.js generative editor powered by GPT-4o-mini ✨</p>
           </div>
           </div>
           <div className="flex flex-col gap-4 xs:flex-row xs:gap-3">
