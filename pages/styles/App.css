@@ -1,0 +1,29 @@
+/* src/styles/App.css */
+.floating-button {
+    position: fixed;
+    bottom: 20%;
+    right: 50%;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 14px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .floating-button:hover {
+    background-color: #1eaf73;
+  }
+  .logo-title{
+
+    color: #1eaf73;
+  }
+
+  .logo-subtitle{
+    font-size: 13px;
+    color: #050505;
+  }

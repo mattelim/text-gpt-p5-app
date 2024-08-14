@@ -21,7 +21,7 @@ export default function SandBox({running, result}) {
     </html>`;
     
     if (!running) {
-      return <div className="w-full min-h-[500px] bg-gray-100 rounded text-sm text-gray-400 flex justify-center items-center">没有代码在运行</div>
+      return <div className="w-full min-h-[590px] bg-gray-100 rounded text-sm text-gray-400 flex justify-center items-center">没有代码在运行</div>
     }
     return (
       <div className="w-full min-h-[500px] border border-gray-300 rounded">

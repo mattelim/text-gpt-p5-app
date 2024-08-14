@@ -16,7 +16,7 @@ export default function TextInput({textInput, onChange, onSubmit, waiting, selec
           
         </div>
         <form onSubmit={onSubmit} className="w-full">
-          <textarea key="textarea-01" className="block min-h-[50px] xs:min-h-[70px] border-[1.5px] border-emerald-500 p-2 rounded w-full mb-2 text-sm
+          <textarea key="textarea-01" className="block min-h-[50px] xs:min-h-[120px] border-[1.5px] border-emerald-500 p-2 rounded w-full mb-2 text-sm
           disabled:border-gray-300 disabled:text-gray-600 disabled:bg-gray-100"
             type="text"
             name="prompt"
@@ -29,7 +29,7 @@ export default function TextInput({textInput, onChange, onSubmit, waiting, selec
           { waiting ? 
           <button className="bg-gray-300 p-2 rounded w-full text-white text-sm px-3" type="submit" disabled>
             <img src="loading.png" alt="loading icon" className="animate-spin w-4 h-4 mr-2 inline" />
-            Generating p5.js code...
+            AI 正在生成代码...
           </button>
           : 
           <button className="bg-emerald-500 p-2 rounded w-full text-white text-sm px-3 cursor-pointer" type="submit">提交/更新</button> }

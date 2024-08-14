@@ -45,7 +45,7 @@ export default function Home() {
     event.preventDefault();
     setlogMsg("");
     setWaiting(true);
-    setResult("// Please be patient, this may take a while...");
+    setResult("// 请耐心等会儿，可能会花比较长时间...");
     setSelVal("");
   
     // Update conversation history with the user's input
@@ -128,19 +128,19 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>AI 创意编程</title>
+        <title>斯内克 AI 创意编程</title>
         <meta name="description" content="Turn text into p5.js code using GPT and display it" />
-        <link rel="icon" href="/gpt-p5.svg" />
+        <link rel="icon" href="/snake-ai.svg" />
       </Head>
       <div className="w-full p-5 flex flex-col gap-5 max-w-2xl min-w-[320px] relative 2xl:max-w-7xl">
         <header className="flex gap-3 justify-between">
           <div className="flex gap-3">
-            <img src="gpt-p5-emerald.png" alt="logo" className="h-11 w-11 p-2 bg-white rounded-full shadow shadow-emerald-600/30 overflow-visible"/>
-            <div className="text-gray-700">
-              <h1 className="font-semibold text-xl ">
-                AI 创意编程
+            <img src="logo-ai.png" alt="logo" className="h-16 w-16 p-1 bg-white rounded-full shadow shadow-emerald-600/30 overflow-visible"/>
+            <div className="text-gray-700 flex flex-col justify-center h-full">
+              <h1 className="logo-title font-semibold text-xl ">
+              斯内克 AI 创意编程
               </h1>
-              <p>体验AI的力量</p>
+              <p className="logo-subtitle" >体验AI的力量 - AI generation</p>
             </div>
           </div>
           <div className="flex flex-col gap-4 xs:flex-row xs:gap-3">
@@ -172,7 +172,7 @@ export default function Home() {
             />
             <button 
               onClick={startNewTopic} 
-              className="mt-4 p-2 bg-blue-500 text-white rounded"
+              className="floating-button mt-4 p-2 bg-blue-500 text-white rounded"
             >
               新想法
             </button>
