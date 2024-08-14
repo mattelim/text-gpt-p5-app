@@ -3,6 +3,8 @@ import { useState, useCallback, useEffect } from "react";
 import TextInput from "./components/TextInput";
 import Editor from "./components/Editor";
 import RunContainer from "./components/RunContainer";
+import CodeImporterExporter from "./components/CodeImporterExporter"; // 导入新组件
+
 
 export default function Home() {
   const [result, setResult] = useState("// 请在上面指令区输入你的指令，然后点“提交”");
@@ -14,7 +16,7 @@ export default function Home() {
   const [conversationHistory, setConversationHistory] = useState([]); // New state for conversation history
 
   const egArray = [];
-
+  const MAX_HISTORY_LENGTH = 4; // 设置最大历史会话数目
   useEffect(() => {
     let ranOnce = false;
 
@@ -51,6 +53,10 @@ export default function Home() {
     // Update conversation history with the user's input
     const userMessage = { role: "user", content: textInput };
     const newConversation = [...conversationHistory, userMessage];
+     // 限制历史会话数目
+  if (newConversation.length > MAX_HISTORY_LENGTH) {
+    newConversation.splice(0, newConversation.length - MAX_HISTORY_LENGTH); // 保留最新的会话
+  }
     setConversationHistory(newConversation);
   
     try {
@@ -70,7 +76,14 @@ export default function Home() {
   
       // Update conversation history with the assistant's response
       const assistantMessage = { role: "assistant", content: data.code };
-      setConversationHistory(prev => [...prev, assistantMessage]); // Append assistant's response to history
+      setConversationHistory(prev => {
+        const updatedHistory = [...prev, assistantMessage];
+        // 限制历史会话数目
+        if (updatedHistory.length > MAX_HISTORY_LENGTH) {
+          updatedHistory.splice(0, updatedHistory.length - MAX_HISTORY_LENGTH);
+        }
+        return updatedHistory;
+      });
   
       setResult(data.code);
       setSandboxRunning(true);
@@ -172,11 +185,20 @@ export default function Home() {
             />
             <button 
               onClick={startNewTopic} 
-              className="floating-button mt-4 p-2 bg-blue-500 text-white rounded"
+              className="floating-button-new-idea mt-4 p-2 bg-blue-500 text-white rounded"
             >
               新想法
             </button>
+            <CodeImporterExporter 
+          conversationHistory={conversationHistory}
+          result={result}
+          textInput={textInput}
+          setConversationHistory={setConversationHistory}
+          setResult={setResult}
+          setTextInput={setTextInput}
+        />
           </div>
+          
           <div className="flex flex-col gap-4 2xl:w-1/2">
             <RunContainer 
               key="runcont-01" 
@@ -189,6 +211,7 @@ export default function Home() {
             />
           </div>
         </div>
+        
         <p className="text-gray-400 text-sm text-center mt-3">
           Made by <a href="https://mattelim.com" target="_blank" className="underline">Matte Lim</a>/  Modified by <a href="https://snakecoding.club" target="_blank" className="underline">Daniel</a>
         </p>

@@ -47,7 +47,7 @@ export default async function (req, res) {
     return;
   }
 
-  console.log('User prompt:', prompt,"  history:",history);
+  //console.log('User prompt:', prompt,"  history:",history);
 
   // Construct messages array
   const messages = [
@@ -62,31 +62,33 @@ export default async function (req, res) {
     {
       "role": "user",
       "content": 
-      `Answer only in code, you can add explanations as comments within the code. 
+      `Answer only in code, you can add explanations in chinese as comments within the code. 
       
-      Your response must be in the following p5.js format:
-      
-      // <initialize variables>
-
-      function setup() {
-        // <setup code>
-      }
-      
-      // <other code>
-
-      function draw() {
-        // <draw code>
-      } 
-
-      // <other code>
-
-      User text input:
-      """
-      ${prompt}
-      """`
+     
+      `
     }
   ];
-  console.log('Request message:', messages);
+   // Your response must be in the following p5.js format:
+      
+      // // <initialize variables>
+
+      // function setup() {
+      //   // <setup code>
+      // }
+      
+      // // <other code>
+
+      // function draw() {
+      //   // <draw code>
+      // } 
+
+      // // <other code>
+
+      // User text input:
+      // """
+      // ${prompt}
+      // """
+ // console.log('Request message:', messages);
   try {
     const completion = await fetch(api_url, {
       method: 'POST',
@@ -103,7 +105,7 @@ export default async function (req, res) {
     });
 
     const data = await completion.json();
-    console.log("completion===>:", data.choices[0].message.content); 
+    //console.log("completion===>:", data.choices[0].message.content); 
     const result = data.choices[0].message.content;
     const cleanedResult = result.replace(/```javascript|```/g, '').trim();
     res.status(200).json({ code: cleanedResult });
