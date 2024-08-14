@@ -543,7 +543,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Text-GPT-p5</title>
+        <title>AI 创意编程</title>
         <meta name="description" content="Turn text into p5.js code using GPT and display it" />
         <link rel="icon" href="/gpt-p5.svg" />
       </Head>
@@ -553,9 +553,9 @@ export default function Home() {
             <img src="gpt-p5-emerald.png" alt="logo" className="h-11 w-11 p-2 bg-white rounded-full shadow shadow-emerald-600/30 overflow-visible"/>
           <div className="text-gray-700">
             <h1 className="font-semibold text-xl ">
-              Text-GPT-p5
+            AI 创意编程
             </h1>
-            <p>A text to p5.js generative editor powered by GPT-4o-mini ✨</p>
+            <p>体验AI的力量</p>
           </div>
           </div>
           <div className="flex flex-col gap-4 xs:flex-row xs:gap-3">
