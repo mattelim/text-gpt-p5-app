@@ -62,7 +62,7 @@ export default async function (req, res) {
     {
       "role": "user",
       "content": 
-      `Answer only in code, you can add explanations in chinese as comments within the code. 
+      `Answer only in code, you can add explanations in chinese as comments within the code,comments must be followed by "//". 
       
      
       `
