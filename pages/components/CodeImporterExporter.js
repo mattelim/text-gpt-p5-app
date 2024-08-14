@@ -31,10 +31,10 @@ const CodeImporterExporter = ({ conversationHistory, result, textInput, setConve
   return (
     <div>
       <button onClick={exportCode} className="floating-button-exporter mt-4 p-2 bg-green-500 text-white rounded">
-        导出代码
+        导出
       </button>
       <label className="floating-button-importer custom-file-input mt-4">
-        导入代码
+        导入
         <input type="file" accept=".json" onChange={importCode} className="file-input" />
       </label>
     </div>

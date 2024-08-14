@@ -25,14 +25,14 @@
 
   .floating-button-exporter {
     position: fixed;
-    bottom: 20%;
-    right: 54%;
+    bottom: 13%;
+    right: 43%;
     background-color: #10b981;
     color: white;
     border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
+     
+    width: 50px;
+    height: 50px;
     font-size: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
@@ -48,14 +48,14 @@
 
   .floating-button-importer {
     position: fixed;
-    bottom: 20%;
-    right: 58%;
+    bottom: 13%;
+    right: 47%;
     background-color: #10b981;
     color: white;
     border: none;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     font-size: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
