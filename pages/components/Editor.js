@@ -10,7 +10,7 @@ export default function Editor({result, onChange, waiting}) {
           height="100%"
           width="100%"
           style={{border: "1.5px solid #d1d5db", borderRadius: "5px", overflow: "clip"}}
-          minHeight="100px"
+          minHeight="200px"
           extensions={[javascript({ jsx: true })]}
           onChange={onChange}
           readOnly={waiting}
