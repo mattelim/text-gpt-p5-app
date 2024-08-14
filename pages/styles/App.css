@@ -72,7 +72,8 @@
   
   .custom-file-input {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 10px 15px;
+    align-content:center;
     background-color: #4CAF50; /* 自定义背景颜色 */
     color: white; /* 字体颜色 */
     border: none;
