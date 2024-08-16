@@ -59,6 +59,7 @@ export default function Home() {
   }
     setConversationHistory(newConversation);
   
+    console.log("request JSON:",JSON.stringify({ prompt: textInput, history: newConversation }));
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_REMOTE_API_URL || ''}/api/generate`, {
         method: "POST",
