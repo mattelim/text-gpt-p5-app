@@ -4,8 +4,17 @@ import TextInput from "./components/TextInput";
 import Editor from "./components/Editor";
 import RunContainer from "./components/RunContainer";
 import CodeImporterExporter from "./components/CodeImporterExporter"; // 导入新组件
+ 
+ 
+// Initializing the cors middleware
+const whitelist = process.env.WHITELISTED_DOMAINS ? process.env.WHITELISTED_DOMAINS.split(',') : '*';
+const MODEL = process.env.MODEL;
 
+ 
+const apiKey = process.env.OPENAI_API_KEY;
+const api_url = process.env.API_URL;
 
+console.log("api_url ",api_url);
 export default function Home() {
   const [result, setResult] = useState("// 请在上面指令区输入你的指令，然后点“提交”");
   const [textInput, setTextInput] = useState("");
@@ -59,25 +68,69 @@ export default function Home() {
   }
     setConversationHistory(newConversation);
   
-    console.log("request JSON:",JSON.stringify({ prompt: textInput, history: newConversation }));
+    const messages = [
+      {
+        "role": "system",
+        "content": "You are an expert p5.js coder. You convert user text input into p5.js code.所有注释用中文"
+      },
+      ...newConversation, // 将历史对话添加到 messages 数组中
+      {
+        "role": "user",
+        "content": 
+        `Answer only in code, you can add explanations in chinese as comments within the code . 
+        additionally,As a programming teacher for teenagers, you need to patiently explain the programming concepts used in this program  through comments ,
+        All comments should start with double slashes.
+       
+        `
+      }
+    ];
+
+
+
+
+
+
+
+
+
+
+  console.log("messages :",messages);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_REMOTE_API_URL || ''}/api/generate`, {
-        method: "POST",
+      const response = await fetch('https://openai.snakecoding.club/v1/chat/completions', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
         },
-        body: JSON.stringify({ prompt: textInput, history: newConversation }), // Include history in the request
+        body: JSON.stringify({
+          "model": MODEL,
+          "messages": messages,
+          "temperature": 0.5,
+          "max_tokens": 10000
+        })
       });
   
+
+
       const data = await response.json();
-      console.log("response::",response);
+      // console.log("completion===>:", data); 
+       const result = data.choices[0].message.content;
+       const cleanedResult = result.replace(/```javascript|```/g, '').trim();
+
+
+
+
+
+
+      //const data = await response.json();
+      console.log("response::",cleanedResult);
       if (response.status !== 200) {
         setWaiting(false);
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
   
       // Update conversation history with the assistant's response
-      const assistantMessage = { role: "assistant", content: data.code };
+      const assistantMessage = { role: "assistant", content: cleanedResult };
       setConversationHistory(prev => {
         const updatedHistory = [...prev, assistantMessage];
         // 限制历史会话数目
@@ -87,7 +140,7 @@ export default function Home() {
         return updatedHistory;
       });
   
-      setResult(data.code);
+      setResult(cleanedResult);
       setSandboxRunning(true);
       setWaiting(false);
     } catch (error) {

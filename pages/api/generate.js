@@ -69,33 +69,7 @@ export default async function (req, res) {
       `
     }
   ];
-   // Your response must be in the following p5.js format:
-      
-      // // <initialize variables>
-
-      // function setup() {
-      //   // <setup code>
-      // }
-      
-      // // <other code>
-
-      // function draw() {
-      //   // <draw code>
-      // } 
-
-      // // <other code>
-
-      // User text input:
-      // """
-      // ${prompt}
-      // """
- // console.log('Request message:', messages);
-//  console.log("message requesting:",JSON.stringify({
-//   "model": MODEL,
-//   "messages": messages,
-//   "temperature": 0.5,
-//   "max_tokens": 10000
-// }));
+  
   try {
     const completion = await fetch(api_url, {
       method: 'POST',
