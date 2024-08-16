@@ -70,6 +70,7 @@ export default function Home() {
       });
   
       const data = await response.json();
+      console.log("response::",response);
       if (response.status !== 200) {
         setWaiting(false);
         throw data.error || new Error(`Request failed with status ${response.status}`);
