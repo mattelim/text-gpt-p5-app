@@ -177,6 +177,7 @@ export default function Home() {
               selectChange={textSelectChange} 
               egArray={egArray}
             />
+            {/* TODO 需要加个撤回上一步按钮，当更新的命令没有实现或有错误可以重新下命令生成。 */}
             <Editor 
               key="editor-01" 
               result={result} 
