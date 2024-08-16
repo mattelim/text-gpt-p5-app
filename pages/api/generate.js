@@ -90,12 +90,12 @@ export default async function (req, res) {
       // ${prompt}
       // """
  // console.log('Request message:', messages);
- console.log("message requesting:",JSON.stringify({
-  "model": MODEL,
-  "messages": messages,
-  "temperature": 0.5,
-  "max_tokens": 10000
-}));
+//  console.log("message requesting:",JSON.stringify({
+//   "model": MODEL,
+//   "messages": messages,
+//   "temperature": 0.5,
+//   "max_tokens": 10000
+// }));
   try {
     const completion = await fetch(api_url, {
       method: 'POST',
@@ -112,7 +112,7 @@ export default async function (req, res) {
     });
   
     const data = await completion.json();
-    //console.log("completion===>:", data.choices[0].message.content); 
+    console.log("completion===>:", data); 
     const result = data.choices[0].message.content;
     const cleanedResult = result.replace(/```javascript|```/g, '').trim();
     res.status(200).json({ code: cleanedResult });
