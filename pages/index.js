@@ -90,8 +90,8 @@ export default function Home() {
       setSandboxRunning(true);
       setWaiting(false);
     } catch (error) {
-      console.error(error);
-      alert(error.message);
+      console.error(error.message);
+      alert("错误信息:",error.message);
       setWaiting(false);
     }
   }
