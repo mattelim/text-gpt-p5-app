@@ -62,8 +62,9 @@ export default async function (req, res) {
     {
       "role": "user",
       "content": 
-      `Answer only in code, you can add explanations in chinese as comments within the code,comments must be followed by "//". 
-      additionally,As a programming teacher for teenagers, you need to patiently explain the programming concepts used in this program  through comments "//".
+      `Answer only in code, you can add explanations in chinese as comments within the code . 
+      additionally,As a programming teacher for teenagers, you need to patiently explain the programming concepts used in this program  through comments ,
+      All comments should start with double slashes.
      
       `
     }
