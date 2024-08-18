@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { saveAs } from 'file-saver';
 
 const CodeImporterExporter = ({ conversationHistory, result, textInput, setConversationHistory, setResult, setTextInput }) => {
+  const [fileName, setFileName] = useState('文件名'); // 默认文件名，不包括后缀
+
   // 导出代码为 JSON 文件
   const exportCode = () => {
     const codeToExport = {
@@ -10,7 +12,7 @@ const CodeImporterExporter = ({ conversationHistory, result, textInput, setConve
       textInput: textInput,
     };
     const blob = new Blob([JSON.stringify(codeToExport, null, 2)], { type: 'application/json' });
-    saveAs(blob, 'code_export.json');
+    saveAs(blob, `${fileName}.json`); // 使用用户输入的文件名并添加后缀
   };
 
   // 导入代码
@@ -28,16 +30,35 @@ const CodeImporterExporter = ({ conversationHistory, result, textInput, setConve
     reader.readAsText(file);
   };
 
+  const handleFocus = () => {
+    if (fileName === '文件名') {
+      setFileName(''); // 清空输入框
+    }
+  };
+
   return (
-    <div>
-      <button onClick={exportCode} className="floating-button-exporter mt-4 p-2 bg-green-500 text-white rounded">
-        导出
-      </button>
-      <label className="floating-button-importer custom-file-input mt-4">
-        导入
-        <input type="file" accept=".json" onChange={importCode} className="file-input" />
-      </label>
-    </div>
+    <div className="flex items-center space-x-2"> {/* 使用 Flexbox 布局 */}
+    <input 
+      type="text" 
+      value={fileName} 
+      onFocus={handleFocus} // 点击输入框时清空
+      onChange={(e) => setFileName(e.target.value)} 
+      placeholder="输入文件名" 
+      className="p-1 border rounded"
+    />
+    <button 
+      onClick={exportCode} 
+      className="p-1 bg-green-500 text-white rounded w-16" // 统一宽度
+    >
+      导出
+    </button>
+    <button 
+      onClick={importCode} 
+      className="p-1 bg-blue-500 text-white rounded w-16" // 统一宽度
+    >
+      导入
+    </button>
+  </div>
   );
 };
 

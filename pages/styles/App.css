@@ -1,5 +1,5 @@
 /* src/styles/App.css */
-.floating-button-new-idea {
+/* .floating-button-new-idea {
     position: fixed;
     bottom: 20%;
     right: 50%;
@@ -17,13 +17,13 @@
   
   .floating-button-new-idea:hover {
     background-color: #1eaf73;
-  }
+  } */
   .logo-title{
 
     color: #1eaf73;
   }
 
-  .floating-button-exporter {
+  /* .floating-button-exporter {
     position: fixed;
     bottom: 13%;
     right: 43%;
@@ -64,27 +64,64 @@
   
   .floating-button-importer:hover {
     background-color: #1eaf73;
-  }
-
-  .file-input {
-    display: none; /* 隐藏默认的文件输入 */
+  } */
+  /* .floating-button-exporter {
+    margin-top: 0px;
+    background-color: #10b981;
+    color: white;
+    border: none;
+     
+    width: 50px;
+    height: 50px;
+    font-size: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s;
   }
   
-  .custom-file-input {
+  .floating-button-exporter:hover {
+    background-color: #1eaf73;
+  }
+
+
+
+
+  .floating-button-importer {
+    margin-left: 20px;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .floating-button-importer:hover {
+    background-color: #1eaf73;
+  } 
+  .file-input {
+    display: none; /* 隐藏默认的文件输入
+  } */
+  
+  /* .custom-file-input {
     display: inline-block;
     padding: 10px 15px;
     align-content:center;
-    background-color: #4CAF50; /* 自定义背景颜色 */
-    color: white; /* 字体颜色 */
+    background-color: #4CAF50;  
+    color: white;  
     border: none;
-    border-radius: 5px; /* 圆角 */
-    cursor: pointer; /* 鼠标指针 */
-    transition: background-color 0.3s; /* 动画效果 */
+    border-radius: 5px; 
+    cursor: pointer;  
+    transition: background-color 0.3s;  
   }
   
   .custom-file-input:hover {
-    background-color: #45a049; /* 悬停时的背景颜色 */
-  }
+    background-color: #45a049;  
+  }   */
   .logo-subtitle{
     font-size: 13px;
     color: #050505;

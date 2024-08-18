@@ -17,7 +17,6 @@ const temperature = process.env.TEMPERATURE;
 const max_tokens = process.env.MAX_TOKENS;
 console.log("api_url ", api_url);
 export default function Home() {
-  const [isSubmitting, setIsSubmitting] = useState(false); // 定义状态
   const [result, setResult] = useState("// 请在上面指令区输入你的指令，然后点“提交”");
   const [textInput, setTextInput] = useState("");
   const [waiting, setWaiting] = useState(false);
@@ -55,16 +54,12 @@ export default function Home() {
   }
 
   async function textInputSubmit(event) {
-
     event.preventDefault();
     setlogMsg("");
-    setIsSubmitting(true); // 设置按钮为正在处理状态
-    
     setWaiting(true);
     setResult("// 请耐心等会儿，可能会花比较长时间...");
     setSelVal("");
-    //console.log("Waiting:", waiting);
-    //console.log("提交按钮:", isSubmitting);
+
     // Update conversation history with the user's input
     const userMessage = { role: "user", content: textInput };
     const newConversation = [...conversationHistory, userMessage];
@@ -115,7 +110,7 @@ export default function Home() {
       })
     }
     console.log("MODEL ", MODEL);
-    console.log("requetOption :", requetOption);
+    //console.log("requetOption :",requetOption);
     try {
       const response = await fetch('https://openai.snakecoding.club/v1/chat/completions', requetOption);
 
@@ -126,7 +121,7 @@ export default function Home() {
       const result = data.choices[0].message.content;
       const cleanedResult = result.replace(/```javascript|```/g, '').trim();
 
-      console.log("提交按钮2:", isSubmitting);
+
 
 
 
@@ -152,12 +147,10 @@ export default function Home() {
       setResult(cleanedResult);
       setSandboxRunning(true);
       setWaiting(false);
-      setIsSubmitting(false); // 请求完成，设置按钮为可用状态
     } catch (error) {
       console.error("错误信息:", error.message);
       alert("错误信息:", error.message);
       setWaiting(false);
-      setIsSubmitting(false); // 请求失败，设置按钮为可用状态
     }
   }
 
@@ -196,9 +189,7 @@ export default function Home() {
   }
 
   // New function to start a new topic
-  function startNewTopic(event) {
-    event.preventDefault(); // 阻止默认行为
-    console.log("新想法按钮");
+  function startNewTopic() {
     setConversationHistory([]); // Clear conversation history
     setTextInput(""); // Clear text input
     setResult("// 请在上面指令区输入你的指令，然后点“提交”"); // Reset result
@@ -239,46 +230,39 @@ export default function Home() {
               key="textinput-01"
               textInput={textInput}
               onChange={textInputChange}
-
+              onSubmit={textInputSubmit}
               waiting={waiting}
               selectVal={selVal}
               selectChange={textSelectChange}
               egArray={egArray}
-              textInputSubmit={textInputSubmit}
-              startNewTopic={startNewTopic}
             />
             {/* TODO 需要加个撤回上一步按钮，当更新的命令没有实现或有错误可以重新下命令生成。 */}
-            {/* <div className="flex gap-3 mt-0">
-              <button
-                onClick={textInputSubmit}
-                className="p-2 bg-green-500 text-white rounded"
-              >
-                提交/更新
-              </button>
-              <button
-                onClick={startNewTopic}
-                className="floating-button-new-idea p-2 bg-blue-500 text-white rounded"
-              >
-                新想法
-              </button>
-
-            </div> */}
-            <Editor
-              key="editor-01"
-              result={result}
-              onChange={editorChange}
-              waiting={waiting}
-              conversationHistory={conversationHistory}
-
-              textInput={textInput}
-              setConversationHistory={setConversationHistory}
-              setResult={setResult}
-              setTextInput={setTextInput}
-            />
-
-
-
-
+            <button
+              onClick={startNewTopic}
+              className="floating-button-new-idea mt-4 p-2 bg-blue-500 text-white rounded"
+            >
+              新想法
+            </button>
+              <Editor
+                key="editor-01"
+                result={result}
+                onChange={editorChange}
+                waiting={waiting}
+              />
+             
+            
+            
+            {/* 将导入导出组件放在右下角 */}
+            <div className="mt-auto">
+              <CodeImporterExporter
+                conversationHistory={conversationHistory}
+                result={result}
+                textInput={textInput}
+                setConversationHistory={setConversationHistory}
+                setResult={setResult}
+                setTextInput={setTextInput}
+              />
+            </div>
           </div>
 
           <div className="flex flex-col gap-4 2xl:w-1/2">
@@ -291,7 +275,7 @@ export default function Home() {
               logMsg={logMsg}
               waiting={waiting}
             />
-
+           
           </div>
         </div>
 

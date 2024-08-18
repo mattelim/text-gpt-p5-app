@@ -2,7 +2,8 @@ import SandBox from "./SandBox";
 
 export default function RunContainer({sandboxRunning, clickPlay, clickStop, result, logMsg, waiting}) {
     return (
-      <div className="min-w-[790px] min-h-[790px] rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3 flex flex-col gap-2">
+      <div className="rounded-md border border-gray-100 shadow-md shadow-emerald-600/30 bg-white p-3 flex flex-col gap-2">
+        {/* min-w-[790px] min-h-[790px]  */}
         <div className="flex justify-between">
             <h3 className="font-semibold text-gray-500 mb-2">运行结果：</h3>
             <div className="flex gap-2">
