@@ -94,21 +94,23 @@ export default function Home() {
 
 
 
-  console.log("messages :",messages);
+
+  const requetOption={
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      "model": MODEL,
+      "messages": messages,
+      "temperature": 0.5,
+      "max_tokens": 10000
+    })
+  }
+  console.log("requetOption :",requetOption);
     try {
-      const response = await fetch('https://openai.snakecoding.club/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          "model": MODEL,
-          "messages": messages,
-          "temperature": 0.5,
-          "max_tokens": 10000
-        })
-      });
+      const response = await fetch('https://openai.snakecoding.club/v1/chat/completions', requetOption);
   
 
 
