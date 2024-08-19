@@ -296,7 +296,7 @@ export default function Home() {
         </div>
 
         <p className="text-gray-400 text-sm text-center mt-3">
-          Made by <a href="https://mattelim.com" target="_blank" className="underline">Matte Lim</a>/  Modified by <a href="https://snakecoding.club" target="_blank" className="underline">Daniel / {MODEL}</a>
+          Made by <a href="https://mattelim.com" target="_blank" className="underline">Matte Lim</a>/  Modified by <a href="https://snakecoding.club" target="_blank" className="underline">Daniel</a> / AI model : {MODEL}
         </p>
 
       </div>
