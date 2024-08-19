@@ -7,14 +7,14 @@ import CodeImporterExporter from "./components/CodeImporterExporter"; // 导入�
 
 
 // Initializing the cors middleware
-const whitelist = process.env.WHITELISTED_DOMAINS ? process.env.WHITELISTED_DOMAINS.split(',') : '*';
-const MODEL = process.env.MODEL;
+const whitelist = process.env.NEXT_PUBLIC_WHITELISTED_DOMAINS ? process.env.NEXT_PUBLIC_WHITELISTED_DOMAINS.split(',') : '*';
+const MODEL = process.env.NEXT_PUBLIC_MODEL;
 
 
-const apiKey = process.env.OPENAI_API_KEY;
-const api_url = process.env.API_URL;
-const temperature = process.env.TEMPERATURE;
-const max_tokens = process.env.MAX_TOKENS;
+const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+const api_url = process.env.NEXT_PUBLIC_API_URL;
+const temperature = process.env.NEXT_PUBLIC_TEMPERATURE;
+const max_tokens = process.env.NEXT_PUBLIC_MAX_TOKENS;
 console.log("api_url ", api_url);
 export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false); // 定义状态
