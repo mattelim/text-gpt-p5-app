@@ -28,10 +28,10 @@
         @apply bg-gradient-to-r from-blue-500 to-green-500; /* 自定义渐变背景 */
     }
     .bg-gray-100{
-        background-color:rgb(9, 14, 13)
+        background-color:rgb(34, 32, 37)
     }
     .text-gray-500{
-        color: #53462d;
+        color: #31302e;
     }
     
 }
