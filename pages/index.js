@@ -276,8 +276,7 @@ export default function Home() {
               setTextInput={setTextInput}
             />
 
-
-
+ 
 
           </div>
 

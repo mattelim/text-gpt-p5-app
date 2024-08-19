@@ -17,6 +17,7 @@ const CodeImporterExporter = ({ conversationHistory, result, textInput, setConve
 
   // 导入代码
   const importCode = (event) => {
+    console.log(event.target);
     const file = event.target.files[0];
     if (!file) return;
 
@@ -52,12 +53,16 @@ const CodeImporterExporter = ({ conversationHistory, result, textInput, setConve
     >
       导出
     </button>
-    <button 
-      onClick={importCode} 
-      className="p-1 bg-blue-500 text-white rounded w-16" // 统一宽度
-    >
-      导入
-    </button>
+  
+    <label className="custom-file-input">
+    <input 
+      type="file" 
+      accept=".json" 
+      onChange={importCode} 
+      className="hidden" // 隐藏原始文件输入框
+    />
+    <span className="w-32 p-2 bg-blue-500 text-white rounded cursor-pointer text-center">导入</span> {/* 增加 padding 和 text-center */}
+  </label>
   </div>
   );
 };

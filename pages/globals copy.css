@@ -6,10 +6,10 @@
     #__next {
         @apply w-full flex justify-center;
 
-        background-color: #1b2324;
-        color: #000000; /* 默认文本颜色 */
+        background-color: #000000;
+        color: #ffffff; /* 默认文本颜色 */
         /* 暗色模式下的样式 */
-         
+        @apply dark:bg-gray-900 dark:text-gray-300; /* 暗色模式下的背景和文本颜色 */
 
     }
 }
@@ -28,7 +28,7 @@
         @apply bg-gradient-to-r from-blue-500 to-green-500; /* 自定义渐变背景 */
     }
     .bg-gray-100{
-        background-color:rgb(9, 14, 13)
+        background-color:rgb(25 36 58)
     }
     .text-gray-500{
         color: #53462d;
