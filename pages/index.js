@@ -211,7 +211,7 @@ export default function Home() {
       <Head>
         <title>斯内克 AI 创意编程</title>
         <meta name="description" content="Turn text into p5.js code using GPT and display it" />
-        <link rel="icon" href="/snake-ai.svg" />
+        <link rel="icon" href="/AI-aigr.svg" />
       </Head>
       <div className="w-full p-5 flex flex-col gap-5 max-w-2xl min-w-[320px] relative 2xl:max-w-7xl">
         <header className="flex gap-3 justify-between">
@@ -296,7 +296,7 @@ export default function Home() {
         </div>
 
         <p className="text-gray-400 text-sm text-center mt-3">
-          Made by <a href="https://mattelim.com" target="_blank" className="underline">Matte Lim</a>/  Modified by <a href="https://snakecoding.club" target="_blank" className="underline">Daniel</a>
+          Made by <a href="https://mattelim.com" target="_blank" className="underline">Matte Lim</a>/  Modified by <a href="https://snakecoding.club" target="_blank" className="underline">Daniel / {MODEL}</a>
         </p>
 
       </div>
