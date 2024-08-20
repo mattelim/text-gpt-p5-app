@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from 'next/link'; // 引入 Link 组件
 import { useState, useCallback, useEffect } from "react";
 import TextInput from "./components/TextInput";
 import Editor from "./components/Editor";
@@ -59,7 +60,7 @@ export default function Home() {
     event.preventDefault();
     setlogMsg("");
     setIsSubmitting(true); // 设置按钮为正在处理状态
-    
+
     setWaiting(true);
     setResult("// 请耐心等会儿，可能会花比较长时间...");
     setSelVal("");
@@ -231,6 +232,9 @@ export default function Home() {
             <a href="https://www.buymeacoffee.com/mattelim" target="_blank">
               <img src="bmc-logo.svg" alt="buy me a coffee" className="w-8 aspect-square opacity-30 hover:opacity-100 xs:w-6" />
             </a>
+            <Link href="/share" className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+              作品列表
+            </Link>
           </div>
         </header>
         <div className="flex flex-col gap-4 2xl:flex-row w-full">
@@ -248,21 +252,6 @@ export default function Home() {
               startNewTopic={startNewTopic}
             />
             {/* TODO 需要加个撤回上一步按钮，当更新的命令没有实现或有错误可以重新下命令生成。 */}
-            {/* <div className="flex gap-3 mt-0">
-              <button
-                onClick={textInputSubmit}
-                className="p-2 bg-green-500 text-white rounded"
-              >
-                提交/更新
-              </button>
-              <button
-                onClick={startNewTopic}
-                className="floating-button-new-idea p-2 bg-blue-500 text-white rounded"
-              >
-                新想法
-              </button>
-
-            </div> */}
             <Editor
               key="editor-01"
               result={result}
@@ -276,7 +265,7 @@ export default function Home() {
               setTextInput={setTextInput}
             />
 
- 
+
 
           </div>
 

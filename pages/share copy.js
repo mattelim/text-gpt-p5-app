@@ -45,7 +45,7 @@ const WorkCard = ({ work }) => {
       <h2 className="text-lg font-medium">{work.title}</h2>
       <p className="text-gray-600 text-sm">作者: {work.author}</p>
       {/* 添加链接到作品详情页 */}
-      <a href={`/work/id=${work.id}`} className="text-blue-500 hover:underline">查看作品</a>
+      <a href={`/work/${work.id}`} className="text-blue-500 hover:underline">查看作品</a>
     </div>
   );
 };
