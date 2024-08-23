@@ -2,8 +2,8 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import RunContainer from "../components/RunContainer";
-
 import Link from 'next/link'; // 引入 Link 组件
+ 
 export default function WorkDetail() {
     const router = useRouter();
     const { id } = router.query;

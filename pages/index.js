@@ -5,7 +5,7 @@ import TextInput from "./components/TextInput";
 import Editor from "./components/Editor";
 import RunContainer from "./components/RunContainer";
 import CodeImporterExporter from "./components/CodeImporterExporter"; // 导入新组件
-
+import html2canvas from 'html2canvas';
 
 // Initializing the cors middleware
 const whitelist = process.env.NEXT_PUBLIC_WHITELISTED_DOMAINS ? process.env.NEXT_PUBLIC_WHITELISTED_DOMAINS.split(',') : '*';
@@ -26,9 +26,17 @@ export default function Home() {
   const [logMsg, setlogMsg] = useState("");
   const [selVal, setSelVal] = useState("");
   const [conversationHistory, setConversationHistory] = useState([]); // New state for conversation history
+  const [author, setAuthor] = useState(""); // 新增作者输入框状态
+  const [showError, setShowError] = useState(false);
+  const [screenshotDataURL, setScreenshotDataURL] = useState(null); // 添加 dataURL 状态
+
 
   const egArray = [];
   const MAX_HISTORY_LENGTH = 4; // 设置最大历史会话数目
+
+
+
+
   useEffect(() => {
     let ranOnce = false;
 
@@ -78,7 +86,9 @@ export default function Home() {
     const messages = [
       {
         "role": "system",
-        "content": "You are an expert p5.js coder. You convert user text input into p5.js code.所有注释用中文"
+        "content": `You are an expert p5.js coder. You convert user text input into p5.js code.所有注释用中文;我希望在生成P5.js 动画后，在动画的第 3 帧自动保存截图。
+        使用 saveCanvas('screenshot', 'png') 函数将动画保存为名为 'screenshot.png' 的文件。
+        `
       },
       ...newConversation, // 将历史对话添加到 messages 数组中
       {
@@ -86,7 +96,7 @@ export default function Home() {
         "content":
           `Answer only in code, you can add explanations in chinese as comments within the code . 
         additionally,As a programming teacher for teenagers, you need to patiently explain the programming concepts used in this program  through comments ,
-        All comments should start with double slashes.
+        All comments should start with double slashes:'//'.
        
         `
       }
@@ -95,7 +105,22 @@ export default function Home() {
 
 
 
+    // const canvas = document.getElementById('defaultCanvas0');
 
+    // function captureScreenshot() {
+    //   const dataURL = canvas.toDataURL();
+
+    //   // 显示截图
+    //   const img = document.createElement('img');
+    //   img.src = dataURL;
+    //   document.body.appendChild(img);
+
+    //   // 下载截图
+    //   const link = document.createElement('a');
+    //   link.href = dataURL;
+    //   link.download = 'my-artwork.png';
+    //   link.click();
+    // }
 
 
 
@@ -194,8 +219,61 @@ export default function Home() {
       setResult('');
       setSandboxRunning(false);
     }
-  }
+  };
 
+  // 处理作者输入
+  const handleAuthorChange = (event) => {
+    setAuthor(event.target.value);
+    setShowError(false); // 当输入框内容改变时，隐藏错误提示
+  };
+
+
+    // 定义回调函数，用于接收来自 RunContainer 的 dataURL
+    const handleScreenshotReady = (dataURL) => {
+      console.log('Screenshot ready in Index.js:', dataURL); 
+  
+      // 这里可以将 dataURL 保存到状态，或者进行其他操作
+      setScreenshotDataURL(dataURL);
+    };
+  // 分享作品
+  const shareWork = async () => {
+    console.log("shareWork button pushed");
+    if (author.trim() === '') { // 检查作者姓名是否为空
+      console.log("输入分享作者的名字！");
+      setShowError(true);
+      return;
+    }
+    console.log('screenshotDataURL===:',screenshotDataURL);
+    try {
+       
+
+      const requestOption = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code: result,
+          screenshot: screenshotDataURL,
+          title: textInput,
+          author: author,
+        }),
+      };
+      const response = await fetch('/api/works/', requestOption);
+      console.log("requestOption  ", requestOption);
+      if (response.ok) {
+        const data = await response.json();
+        console.log('作品分享成功:', data);
+        // 可以在这里添加成功提示，例如弹窗或跳转到作品页面
+      } else {
+        console.error('作品分享失败:', response.status);
+        // 处理分享失败，例如显示错误信息
+      }
+    } catch (error) {
+      console.error('作品分享出错:', error);
+      // 处理分享出错，例如显示错误信息
+    }
+  };
   // New function to start a new topic
   function startNewTopic(event) {
     event.preventDefault(); // 阻止默认行为
@@ -226,16 +304,39 @@ export default function Home() {
             </div>
           </div>
           <div className="flex flex-col gap-4 xs:flex-row xs:gap-3">
-            <a href="https://github.com/mattelim/text-gpt-p5-app" target="_blank" className="xs:order-last">
-              <img src="github-mark.svg" alt="github" className="w-8 aspect-square opacity-30 hover:opacity-100 xs:w-6" />
-            </a>
-            <a href="https://www.buymeacoffee.com/mattelim" target="_blank">
-              <img src="bmc-logo.svg" alt="buy me a coffee" className="w-8 aspect-square opacity-30 hover:opacity-100 xs:w-6" />
-            </a>
-            <Link href="/share" className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-              作品列表
-            </Link>
+            <div className="flex items-center xs:order-last">
+              <a href="https://github.com/mattelim/text-gpt-p5-app" target="_blank" className="mr-3 opacity-30 hover:opacity-100">
+                <img src="github-mark.svg" alt="github" className="w-8 aspect-square xs:w-6" />
+              </a>
+              <a href="https://www.buymeacoffee.com/mattelim" target="_blank" className="opacity-30 hover:opacity-100">
+                <img src="bmc-logo.svg" alt="buy me a coffee" className="w-8 aspect-square xs:w-6" />
+              </a>
+            </div>
+
+            <Link href="/share" className="zplb px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+              作品列表</Link>
+
+            <div className="flex flex-col items-start xs:flex-row xs:items-center">
+              <button onClick={shareWork} disabled={!result || author.trim() === ''} className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50">
+                分享作品
+              </button>
+              {showError && (
+                <p className="text-red-500 text-sm mt-2 xs:mt-0 xs:ml-2">请输入你的名字</p>
+              )}
+            </div>
+
+            <div className="flex items-center">
+              <label htmlFor="author" className="mr-2">你的名字:</label>
+              <input
+                type="text"
+                id="author"
+                value={author}
+                onChange={handleAuthorChange}
+                className="border border-gray-300 rounded-md px-2 py-1"
+              />
+            </div>
           </div>
+
         </header>
         <div className="flex flex-col gap-4 2xl:flex-row w-full">
           <div className="flex flex-col gap-4 2xl:w-1/2">
@@ -278,6 +379,8 @@ export default function Home() {
               result={result}
               logMsg={logMsg}
               waiting={waiting}
+              onScreenshotReady={handleScreenshotReady} // 传递回调函数
+             
             />
 
           </div>

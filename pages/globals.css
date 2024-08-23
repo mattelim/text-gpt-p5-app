@@ -7,7 +7,7 @@
         @apply w-full flex justify-center;
 
         background-color: #1b2324;
-        color: #000000; /* 默认文本颜色 */
+        color: #f0f0f0; /* 默认文本颜色 */
         /* 暗色模式下的样式 */
          
 

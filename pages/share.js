@@ -1,7 +1,7 @@
 // pages/share.js
 import Head from "next/head";
 import { useState, useEffect } from "react";
-
+import Link from 'next/link'; // 引入 Link 组件
 export default function Share() {
   const [works, setWorks] = useState([]);
 
@@ -31,6 +31,9 @@ export default function Share() {
       </Head>
       <div className="container mx-auto p-4">
         <h1 className="text-3xl font-bold mb-4">作品分享</h1>
+        <Link href="/" className="text-blue-500 hover:underline">
+          主页
+        </Link>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {works.length > 0 ? (
             works.map((work) => (

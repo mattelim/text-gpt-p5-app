@@ -41,7 +41,7 @@ export default async function handler(req, res) {
       // 创建新作品
       const { code, screenshot, title, author } = req.body;
       try {
-        console.log("创建新作品 ", req.body);
+       // console.log("创建新作品## ", req.body);
         // 数据验证 (根据需要添加更多验证规则)
         if (!code || !screenshot || !title || !author) {
           return res.status(400).json({ message: '缺少必要参数' });
@@ -51,16 +51,26 @@ export default async function handler(req, res) {
           'INSERT INTO works (code, screenshot, title, author) VALUES (?, ?, ?, ?)',
           [code, screenshot, title, author]
         );
-
-        res.status(201).json({
-          message: '作品创建成功',
-          workId: insertResult.lastID, // SQLite 中使用 lastID 获取新插入的 ID
-        });
+        console.log('insertResult:',insertResult);
+        // 检查是否成功插入数据
+        if (insertResult.changes === 1) {
+          console.log('作品创建成功');
+          res.status(201).json({
+            message: '作品创建成功',
+            workId: insertResult.lastID,
+          });
+        } else {
+          console.error('作品创建失败: 未成功插入数据');
+          res.status(500).json({
+            message: '作品创建失败',
+            error: '无法插入数据到数据库',
+          });
+        }
       } catch (error) {
-        console.error('作品创建失败:', error); // 打印完整的错误对象
+        console.error('作品创建失败:', error.message, error.stack); // 打印详细的错误信息
         res.status(500).json({
           message: '作品创建失败',
-          error: error.message // 返回更详细的错误信息
+          error: error.message,
         });
       }
       break;
