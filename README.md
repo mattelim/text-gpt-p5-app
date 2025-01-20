@@ -1,8 +1,8 @@
 # Text-GPT-p5
 
-A text to p5.js generative editor powered by GPT-3.5 ✨
+A text to p5.js generative editor powered by GPT-4o mini ✨
 1. takes plain text prompts 📝
-2. makes an OpenAI GPT-3.5 call 🤖
+2. makes an OpenAI GPT-4o mini call 🤖
 2. converts them into p5.js code 🌸
 3. displays the p5.js sketch 🖼️
 
